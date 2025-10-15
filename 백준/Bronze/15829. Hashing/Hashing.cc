@@ -2,6 +2,8 @@
 #include <string>
 #include <cmath>
 
+const long long M = 1234567891;
+
 int main()
 {
 	// 문자열 길이
@@ -18,12 +20,17 @@ int main()
 
 	// 결과 출력용 변수
 	long long Result = { 0 };
+	// 제곱 계산을 위한 변수
+	long long Pow = 1;
 	// 문자열 길이만큼 반복
 	for (int i = 0; i < String.length(); ++i)
 	{
+		// i번째 문자와 a를 빼주고 + 1을 해서 문자를 숫자로 매핑한다.
 		int CurrentNumber = String[i] - 'a' + 1;
-		int Sum = CurrentNumber * pow(31, i);
-		Result = (Result + Sum) % 1234567891;
+		// 문자 숫자값에 현재 31^i를 곱해서 결과에 더한다
+		Result = (Result + CurrentNumber * Pow) % M;
+		// 다음 반복 때 사용할 다음 제곱을 계산
+		Pow = (Pow * 31) % M;
 	}
 
 	// 결과 출력
