@@ -1,8 +1,8 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
-int Stair[305][5];
 int Score[305];
+int Stair[305];
 
 int main()
 {
@@ -12,35 +12,30 @@ int main()
     int N;
     cin >> N;
     
-    for(int i = 1; i <= N; ++i)
-        cin >> Score[i];
+    int Total = 0;
     
-    if(N == 1)
+    for(int i = 1; i <= N; ++i)
     {
-        cout << Score[1];
+        cin >> Score[i];
+        Total += Score[i];
+    }
+    
+    if(N <= 2)
+    {
+        cout << Total;
         return 0;
     }
     
-    // 계단 초기값 설정
-    
-    // 첫번째로 첫계단을 밟았다면 점수는 S[1];
-    // 두번째로 첫계단을 밟았을 일은 없으므로 0
-    Stair[1][1] = Score[1];
-    Stair[1][2] = 0;
-    
-    // 2번째 계단
-    // 첫번째로 두번째 계단을 밟았다면 점수는 S[2];
-    // 두번째로 두번째 계단을 밟았다면 첫계단 점수 + 두번째 계단 점수
-    Stair[2][1] = Score[2];
-    Stair[2][2] = Score[1] + Score[2];
-    
-    for(int i = 3; i <= N; ++i)
+    Stair[1] = Score[1];
+    Stair[2] = Score[2];
+    Stair[3] = Score[3];
+   
+    for(int i = 4; i <= N; ++i)
     {
-        Stair[i][1] = max(Stair[i - 2][1], Stair[i - 2][2]) + Score[i];
-        Stair[i][2] = Stair[i - 1][1] + Score[i];
+        Stair[i] = min(Stair[i - 2], Stair[i - 3]) + Score[i];
     }
     
-    cout << max(Stair[N][1], Stair[N][2]);
+    cout << Total - min(Stair[N - 1], Stair[N - 2]);
     
     return 0;
 }
